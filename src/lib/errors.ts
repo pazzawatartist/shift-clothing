@@ -8,8 +8,12 @@ const FRIENDLY_MESSAGES: Record<string, string> = {
 };
 
 /** Converts a raw Postgres/PostgREST error into a safe, user-facing message. */
-export function toFriendlyError(error: { code?: string; message?: string } | null | undefined): string {
+export function toFriendlyError(error: { code?: string; message?: string; details?: string; hint?: string } | null | undefined): string {
   if (!error) return "Something went wrong. Please try again.";
+
+  // Never shown to the user — server-side only, so raw DB errors are diagnosable
+  // without ever leaking them into the UI.
+  console.error("[db error]", error);
 
   const mapped = error.code ? FRIENDLY_MESSAGES[error.code] : undefined;
   if (mapped) {

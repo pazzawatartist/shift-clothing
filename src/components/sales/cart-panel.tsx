@@ -71,6 +71,13 @@ export function CartPanel({
       toast.error("Cart is empty");
       return;
     }
+    // A walk-in POS sale must be paid in full — otherwise create_order() records
+    // it as pending/unpaid and skips the stock deduction, which looks like a
+    // completed sale in the UI but isn't one.
+    if (amountPaid < total) {
+      toast.error(`Amount tendered is short by ${formatCurrency(total - amountPaid)}`);
+      return;
+    }
     setSubmitting(true);
     const result = await createOrder({
       customer_id: customer?.id ?? null,
@@ -195,7 +202,17 @@ export function CartPanel({
             </Select>
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Amount Tendered</Label>
+            <div className="flex items-center justify-between">
+              <Label className="text-xs">Amount Tendered</Label>
+              <button
+                type="button"
+                onClick={() => setAmountPaid(total)}
+                disabled={total <= 0}
+                className="text-xs font-medium text-primary hover:underline disabled:opacity-40"
+              >
+                Exact
+              </button>
+            </div>
             <Input type="number" min={0} value={amountPaid} onChange={(e) => setAmountPaid(Number(e.target.value))} />
           </div>
         </div>
