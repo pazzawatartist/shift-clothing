@@ -122,7 +122,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
               <CardTitle>Order Timeline</CardTitle>
             </CardHeader>
             <CardContent>
-              <OrderTimeline history={order.order_status_history} />
+              <OrderTimeline history={order.order_status_history} placedAt={order.created_at} />
             </CardContent>
           </Card>
         </div>
