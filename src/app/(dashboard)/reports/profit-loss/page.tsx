@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { DateRangeFilter, getDateRangeFromPreset, type RangePreset } from "@/components/shared/date-range-filter";
+import { DateRangeFilter } from "@/components/shared/date-range-filter";
+import { getDateRangeFromPreset, type RangePreset } from "@/lib/utils/date-range";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatPercent } from "@/lib/utils/currency";
 

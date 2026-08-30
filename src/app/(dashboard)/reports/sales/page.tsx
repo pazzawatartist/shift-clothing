@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { DateRangeFilter, getDateRangeFromPreset, type RangePreset } from "@/components/shared/date-range-filter";
+import { DateRangeFilter } from "@/components/shared/date-range-filter";
+import { getDateRangeFromPreset, type RangePreset } from "@/lib/utils/date-range";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExportCsvButton } from "@/components/shared/export-csv-button";
