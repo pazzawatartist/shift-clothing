@@ -31,10 +31,14 @@ export function TopNav({
   fullName,
   email,
   role,
+  businessName,
+  logoUrl,
 }: {
   fullName: string;
   email: string;
   role: UserRole;
+  businessName: string;
+  logoUrl: string | null;
 }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -48,7 +52,7 @@ export function TopNav({
             </Button>
           </SheetTrigger>
           <SheetContent>
-            <Sidebar role={role} />
+            <Sidebar role={role} businessName={businessName} logoUrl={logoUrl} />
           </SheetContent>
         </Sheet>
         <div>

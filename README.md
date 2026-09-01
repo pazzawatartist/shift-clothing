@@ -78,6 +78,36 @@ business rules by calling `.insert()`/`.update()` directly even though those
 functions bypass RLS internally. See the comments at the top of
 `supabase/migrations/0008_functions_business.sql` and `0009_rls.sql`.
 
+## Running this for more than one business
+
+The app is white-label: the business name and logo shown on the login screen,
+in the sidebar, and in the browser title all come from that deployment's own
+`settings` row, not from the code. So **one repo can serve any number of
+clients** — each with their own Supabase project and their own Vercel project,
+both pointing at this same repository. Fix a bug once and every client gets it
+on the next push.
+
+Keep one Supabase project per client. Never put two businesses in one database.
+
+**Per new client:**
+
+1. Create a Supabase project. Copy the URL, anon key, and service role key.
+2. SQL Editor → paste all of `supabase/combined_migrations.sql` → Run.
+3. Do **not** run `supabase/seed.sql` for a real client — it inserts sample
+   catalog data.
+4. Authentication → URL Configuration → set Site URL, and add
+   `<site>/auth/callback` and `<site>/reset-password` as redirect URLs.
+5. Vercel → New Project → import this repo → add the four environment
+   variables from `.env.example`.
+6. Authentication → Users → Add user. **The first user created becomes the
+   admin automatically.**
+7. Sign in → Settings → Business Info → set the business name and upload the
+   logo. That is what brands the whole app.
+
+**The one thing still baked into the code** is `src/app/icon.png`, the browser
+favicon. Next.js resolves it as a static file at build time, so a per-client
+favicon means either swapping that file on a branch, or leaving the shared one.
+
 ## Setup
 
 ### 1. Create a Supabase project

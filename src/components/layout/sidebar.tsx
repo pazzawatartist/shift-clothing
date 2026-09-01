@@ -6,6 +6,7 @@ import { ChevronDown } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, filterNavForRole, type NavItem } from "@/lib/nav-config";
+import { BrandMark } from "./brand-mark";
 import type { UserRole } from "@/types/database.types";
 
 function isActive(pathname: string, href: string) {
@@ -70,16 +71,22 @@ function NavGroup({ item, pathname }: { item: NavItem; pathname: string }) {
   );
 }
 
-export function Sidebar({ role }: { role: UserRole }) {
+export function Sidebar({
+  role,
+  businessName,
+  logoUrl,
+}: {
+  role: UserRole;
+  businessName: string;
+  logoUrl: string | null;
+}) {
   const pathname = usePathname();
   const items = filterNavForRole(NAV_ITEMS, role);
 
   return (
     <aside className="hidden w-64 shrink-0 flex-col border-r bg-card md:flex">
       <div className="flex h-16 items-center gap-2 border-b px-6">
-        <div className="rounded-md bg-foreground px-2 py-1 text-sm font-black italic tracking-tight text-background">
-          SHIFT
-        </div>
+        <BrandMark businessName={businessName} logoUrl={logoUrl} />
       </div>
       <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
         {items.map((item) => (

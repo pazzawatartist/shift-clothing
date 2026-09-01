@@ -492,6 +492,10 @@ export type Database = {
         Returns: void;
       };
       log_login: { Args: Record<string, never>; Returns: void };
+      get_public_branding: {
+        Args: Record<string, never>;
+        Returns: { business_name: string; logo_url: string | null }[];
+      };
       get_dashboard_summary: { Args: Record<string, never>; Returns: Json };
       get_sales_series: {
         Args: { p_granularity?: string; p_days?: number };
